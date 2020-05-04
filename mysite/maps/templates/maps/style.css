@@ -1,0 +1,13 @@
+html {
+	font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  	font-size: 45px;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	min-width: 100%;
+	max-width: 100%;
+	background: linear-gradient(104deg, rgba(255,255,255,1) 0%, rgba(99,147,157,1) 61%, rgba(25,96,111,1) 100%);
+	background-attachment:fixed;
+	height:100%;
+}
