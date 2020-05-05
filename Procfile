@@ -1,1 +1,1 @@
-web: gunicorn Culdesac-Carless-City-Tracker.wsgi
+web: gunicorn mysite.wsgi
