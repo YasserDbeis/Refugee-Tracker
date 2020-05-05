@@ -10,7 +10,7 @@ from django.contrib.gis.geos import Point
 
 def index(request):
     latest_locations = Location.objects.order_by('city')
-    geo_json_string = (serialize('geojson', Location.objects.all(), geometry_field = 'geom', fields = ('city', 'state')))
+    geo_json_string = (serialize('geojson', Location.objects.all(), geometry_field = 'geom', fields = ('city', 'state', 'reference')))
     print(geo_json_string)
     template = loader.get_template('maps/index.html')
     context = {
