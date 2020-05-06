@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import django_heroku
 import django_heroku
+from os import environ
 # GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300'
 # django_heroku.settings(locals())
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -111,8 +112,8 @@ DATABASES = {
 
 # DATABASES['default'] =  dj_database_url.config()
 # DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH')
-GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = environ.get('GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH = environ.get('GDAL_LIBRARY_PATH')
 
 # GEOS_LIBRARY_PATH = os.environ['GEOS_LIBRARY_PATH']
 #
