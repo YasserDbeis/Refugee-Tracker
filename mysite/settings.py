@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
+import django_heroku
 # GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300'
 # django_heroku.settings(locals())
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -87,7 +88,6 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'ENGINE' : 'django.contrib.gis.db.backends.postgis',
         'NAME': 'geolocations',
         'USER': 'postgres',
@@ -108,7 +108,7 @@ GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH')
 # GEOS_LIBRARY_PATH = os.environ['GEOS_LIBRARY_PATH']
 #
 # GDAL_LIBRARY_PATH = os.environ['GDAL_LIBRARY_PATH']
-PROJ4_LIBRARY_PATH = os.environ['PROJ4_LIBRARY_PATH']
+# PROJ4_LIBRARY_PATH = os.environ['PROJ4_LIBRARY_PATH']
 
 
 # Password validation
@@ -148,3 +148,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+django_heroku.settings(locals())
