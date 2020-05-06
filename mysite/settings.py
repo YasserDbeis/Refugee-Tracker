@@ -101,9 +101,10 @@ DATABASES = {
     # }
 }
 
-db_from_env = dj_database_url.config()
+# db_from_env = dj_database_url.config()
 # DATABASES['default'].update(db_from_env)
-
+DATABASES['default'] = dj_database_url.config()
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # DATABASES['default'] =  dj_database_url.config()
 # DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
@@ -153,4 +154,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
