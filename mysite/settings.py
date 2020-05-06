@@ -29,7 +29,9 @@ SECRET_KEY = 'z@z5u7y2thz#)4=s!tg33_)1sc#qpx5rzr-mpcfoea*we&n1c9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'yasser-city-tracker.herokuapp.com',
+]
 
 
 # Application definition
