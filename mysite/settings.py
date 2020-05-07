@@ -115,12 +115,12 @@ DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 # GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
 #help me god
 
-_GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', None)
-if _GDAL_LIBRARY_PATH:
-    GDAL_LIBRARY_PATH = _GDAL_LIBRARY_PATH
-_GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH', None)
-if _GEOS_LIBRARY_PATH:
-    GEOS_LIBRARY_PATH = _GEOS_LIBRARY_PATH
+# _GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', None)
+# if _GDAL_LIBRARY_PATH:
+#     GDAL_LIBRARY_PATH = _GDAL_LIBRARY_PATH
+# _GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH', None)
+# if _GEOS_LIBRARY_PATH:
+#     GEOS_LIBRARY_PATH = _GEOS_LIBRARY_PATH
 
 # DATABASES['default] = {default': dj_database_url.config()}
 # db_from_env = dj_database_url.config()
@@ -130,8 +130,8 @@ if _GEOS_LIBRARY_PATH:
 
 # DATABASES['default'] =  dj_database_url.config()
 # DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-## GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-# GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 
 # GEOS_LIBRARY_PATH = os.environ['GEOS_LIBRARY_PATH']
 #
