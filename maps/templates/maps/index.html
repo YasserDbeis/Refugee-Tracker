@@ -28,7 +28,7 @@ var map = new mapboxgl.Map({
   center: [-41.6691,42.6109]
 });
 var geojson =  JSON.parse('{{ geo_json_string | escapejs }}')
-
+console.log(geojson)
 map.on("load", function () {
   /* Image: An image is loaded and added to the map. */
   map.loadImage("https://i.imgur.com/MK4NUzI.png", function(error, image) {
