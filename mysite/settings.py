@@ -109,7 +109,6 @@ DATABASES = {
 import dj_database_url
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
-DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 
 # GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
 #
@@ -178,3 +177,4 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 django_heroku.settings(locals())
+DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
