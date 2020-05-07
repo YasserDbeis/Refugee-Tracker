@@ -14,7 +14,7 @@ class Location(models.Model):
     state = models.CharField(max_length=2)
     lat = models.FloatField(max_length=50, default=0)
     lon = models.FloatField(max_length=50, default=0)
-    geom = PointField()
+    geom = models.PointField()
     reference = models.CharField(max_length=200)
 
     def __str__(self):
