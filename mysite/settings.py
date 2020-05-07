@@ -110,12 +110,17 @@ db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 
-_GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', None)
-if _GDAL_LIBRARY_PATH:
-    GDAL_LIBRARY_PATH = _GDAL_LIBRARY_PATH
-_GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH', None)
-if _GEOS_LIBRARY_PATH:
-    GEOS_LIBRARY_PATH = _GEOS_LIBRARY_PATH
+GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
+
+GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
+
+
+# _GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', None)
+# if _GDAL_LIBRARY_PATH:
+#     GDAL_LIBRARY_PATH = _GDAL_LIBRARY_PATH
+# _GEOS_LIBRARY_PATH = os.getenv('GEOS_LIBRARY_PATH', None)
+# if _GEOS_LIBRARY_PATH:
+#     GEOS_LIBRARY_PATH = _GEOS_LIBRARY_PATH
 
 # DATABASES['default] = {default': dj_database_url.config()}
 # db_from_env = dj_database_url.config()
