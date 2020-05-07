@@ -14,7 +14,7 @@ import os
 import django_heroku
 import django_heroku
 from os import environ
-# GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300'
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300'
 # django_heroku.settings(locals())
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'maps',
     'django.contrib.gis',
+    'djgeojson'
 ]
 
 MIDDLEWARE = [
@@ -130,8 +131,8 @@ DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 
 # DATABASES['default'] =  dj_database_url.config()
 # DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
-GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+# GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+# GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
 
 # GEOS_LIBRARY_PATH = os.environ['GEOS_LIBRARY_PATH']
 #

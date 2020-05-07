@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
 from django.contrib.gis.db import models
-
+from djgeojson.fields import PointField
 
 # Create your models here.
 
@@ -14,7 +14,7 @@ class Location(models.Model):
     state = models.CharField(max_length=2)
     lat = models.FloatField(max_length=50, default=0)
     lon = models.FloatField(max_length=50, default=0)
-    geom = models.PointField(default='POINT(0 0)', srid=4326)
+    geom = PointField()
     reference = models.CharField(max_length=200)
 
     def __str__(self):

@@ -4,13 +4,17 @@ from .models import Location
 from django.template import loader, RequestContext
 from django.core.serializers import serialize
 from .models import Location
+from djgeojson.serializers import Serializer as GeoJSONSerializer
+
 import json
 from django.contrib.gis.geos import Point
 # Create your views here.
 
 def index(request):
     latest_locations = Location.objects.order_by('city')
-    geo_json_string = (serialize('geojson', Location.objects.all(), geometry_field = 'geom', fields = ('city', 'state', 'reference')))
+    geo_json_string = GeoJSONSerializer().serialize(Location.objects.all(),  use_natural_keys=True, with_modelname=False)
+
+    # geo_json_string = (GeoJSONSerializer().('geojson', Location.objects.all(), geometry_field = 'geom', fields = ('city', 'state', 'reference')))
     print(geo_json_string)
     template = loader.get_template('maps/index.html')
     context = {
