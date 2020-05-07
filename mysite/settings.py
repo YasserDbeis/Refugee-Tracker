@@ -14,7 +14,7 @@ import os
 import django_heroku
 import django_heroku
 from os import environ
-# GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300'
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300'
 # django_heroku.settings(locals())
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
