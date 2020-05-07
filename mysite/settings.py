@@ -113,7 +113,7 @@ DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 # GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
 #
 # GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
-
+#help me god
 
 _GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', None)
 if _GDAL_LIBRARY_PATH:
