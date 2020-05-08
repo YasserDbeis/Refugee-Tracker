@@ -178,3 +178,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 django_heroku.settings(locals()) ##UNCOMMENT FOR HEROKU
 DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
+
+
+STATICFILES_DIRS = [
+    "mysite\maps\static"
+]

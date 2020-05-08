@@ -1,0 +1,18 @@
+.donation {
+  background-color: red;
+  box-shadow: 0 5px 0 darkred;
+  color: white;
+  padding: 1em 1.5em;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.donation:hover {
+  background-color: #ce0606;
+}
+
+.donation:active {
+  box-shadow: none;
+  top: 5px;
+}
