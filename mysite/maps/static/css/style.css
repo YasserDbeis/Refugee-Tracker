@@ -1,0 +1,35 @@
+a.donation {
+  background-color: #5692CE;
+  box-shadow: 5px 5px 0px #3e84c9;
+  color: white;
+  padding: .75em .75em;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-weight: 700;
+}
+
+a.donation:hover {
+  background-color: #3e84c9;
+}
+
+a.donation:active {
+  box-shadow: none;
+  top: 5px;
+}
+
+.title {
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-weight:1000;
+}
+
+body {
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+}
+
+.camp {
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-weight: 1000;
+}

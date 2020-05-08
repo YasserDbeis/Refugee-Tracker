@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'maps',
     'django.contrib.gis',
+
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    "mysite\maps\static"
+]
