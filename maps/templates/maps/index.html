@@ -4,8 +4,11 @@
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js"></script>
   <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css" rel="stylesheet" />
     <title>Culdesac</title>
-    <h1 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 500; font-size: 40px; margin-bottom: 10px; color: #6B6B6B">Car-less City Tracker</h1>
-    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; margin-top: 0px; color: #7B8A8C">Say hello to a future <i>without</i> fumes.</h2>
+    <h1 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 500; font-size: 40px; margin-bottom: 10px; color: #6B6B6B">Global Refugee Camp Tracker</h1>
+
+    var str = "Donate Now to Help Save A Refugee Life";
+    var res = str.link(https://medglobal.org/donate/);
+    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; margin-top: 0px; color: #7B8A8C">res</h2>
 
     <style>
     body { margin:0; padding:0; background-color: #CAD2D3; }
@@ -63,13 +66,12 @@ map.on("load", function () {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
 
-            var str = "Source";
-            var res = str.link(reference);
+
 
             new mapboxgl.Popup()
                 .setLngLat(coordinates)
-                .setHTML('<h1 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 500; font-size: 25px; margin-bottom: 10px; color: #6B6B6B">' + city  + ", " + state + '</h1>' +
-                '<h4 id = "link" style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 500; font-size: 10px; margin-top: 20px; color: #6B6B6B">' + res +  '</h4>')
+                .setHTML('<h1 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 500; font-size: 25px; margin-bottom: 10px; color: #6B6B6B">' + "Camp - " + city + </h1>' +
+                '<h4 id = "link" style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 500; font-size: 10px; margin-top: 20px; color: #6B6B6B">' + state +  '</h4>')
                 .addTo(map);
 
         });
