@@ -31,5 +31,42 @@ body {
 
 .camp {
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
-    font-weight: 1000;
+    font-weight: 1500;
+    text-decoration: none;
+}
+
+.camp2 {
+  min-width: 200px;
+  background-color: #5692CE;
+  box-shadow: 5px 5px 0px #3e84c9;
+  color: white;
+  padding: .75em .75em;
+  position: relative;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+  font-weight: 700;
+}
+
+.camp2:hover {
+  text-color: white;
+  background-color: #3e84c9;
+}
+
+.camp2:active {
+  box-shadow: none;
+  top: 5px;
+}
+
+.mapboxgl-popup-content {
+    position: absolute;
+    min-width: 150px;
+    text-decoration: none !important;
+}
+
+h2 > a {
+    text-decoration: none;
+    color:white;
+
 }
