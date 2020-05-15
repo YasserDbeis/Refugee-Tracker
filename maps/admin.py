@@ -4,4 +4,4 @@ from django.contrib import admin
 from .models import Location, Population
 
 admin.site.register(Location)
-admin.site.reigster(Population)
+admin.site.register(Population)
