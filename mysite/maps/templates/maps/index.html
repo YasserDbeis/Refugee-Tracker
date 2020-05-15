@@ -7,43 +7,230 @@
   <link rel="shortcut icon" type="image/png" href="https://img.icons8.com/dusk/64/000000/globe-earth.png"/>
     <title>Refugee & IDP Camp Tracker</title>
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <h1 class="title" style="text-align: center; font-size: 40px; margin-bottom: 15px; color: #6B6B6B">Refugee & IDP Camp Tracker</h1>
 
-    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; margin-top: 0px; color: #7B8A8C">
-          <a href="https://medglobal.org/donate/" class="donation">Donate</a>
-    </h2>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- semantic UI -->
+  <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+  <!--Chart js-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <!-- deffered chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred"></script>
+  <!-- bttn.css -->
+  <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
+
 
     <style>
-    body { margin:0; padding:0; background-color: #CAD2D3; }
-    #map { position:absolute; top:0; bottom:0; width:100%; height:83.5%; margin-top: 155px }
-  </style>
+
+    body { margin:0; padding:0; background-color: #BFD5DF; }
+    #map { position:relative; top:0; bottom:0; width:100%; height:100%;}
+    #map-container { position:relative; top:0; bottom:0; height:70%; width: 100%;}
+
+    <style>
+      h3 {
+        margin: 10px;
+        font-size: 1.8em;
+      }
+      h3 {
+        margin: 10px;
+        font-size: 1.25em;
+      }
+      p {
+        font-size: 1.25em;
+        margin: 10px;
+        text-align: left;
+      }
+      .map-overlay {
+        padding-top: 1%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.8);
+        margin-right: 20px;
+        border-radius: 3px;
+      }
+      #map {
+        position: relative;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+       #map-container {
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        width: 90%;
+      }
+      #features {
+        text-align: left;
+        top: 0;
+        height: 9em;
+        width: 20em;
+        top: 1%;
+      }
+      #legend {
+        text-align: left;
+        padding: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        line-height: 18px;
+        font-size: 15px;
+        bottom: 4%;
+        right: 0;
+        height: 200px;
+        width: 200px;
+      }
+      .legend-key {
+        text-align: left;
+        display: inline-block;
+        border-radius: 20%;
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+      }
+      #pd {
+        bottom: 0;
+      }
+
+    </style>
 </head>
 
 <body>
 
-  <div id="map"></div>
+
+  <div style="margin: 2em auto; position: relative; margin-bottom: 3.75em; text-align: center;">
+    <h1 class="title" style="text-align: center; font-size: 60px; margin-top: 10px; margin-bottom: 15px; color: #6B6B6B">Refugee & IDP Camp Tracker</h1>
+
+    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; color: #7B8A8C; display: inline-block;">
+        <a href="https://medglobal.org/donate/" class="donation">Donate</a>
+    </h2>
+    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; color: #7B8A8C; display: inline-block;">
+        <a href="javascript:;" onclick="scrollToStats()" class="donation" style="background-color: #e5a9a9;">Statistics</a>
+    </h2>
+  </div>
+
+
+  <div id="map-container" style="text-align: center;">
+    <div style="position=absolute;" id="map"></div>
+    <div class='map-overlay' id='features'><h3>Country of Origin: Refugees and People in Refugee-like Situations</h3>
+    <div id='pd'><h2 style="padding-left: 3%">Hover over a country!</h2></div></div>
+    <div class='map-overlay' id='legend'></div><div></div>
+
+  </div>
+
+    <div id="statistics-container" >
+      <h1 style="text-align: center; font-size: 60px; color: #6B6B6B; margin-top: 1%;">Statistics</h1>
+      <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 5%; max-width: 500px; max-height: 750px;">
+        <h1 style="font-size: 40px; color: #6B6B6B; margin-top: 5%;">By Region</h1>
+        <canvas id="regions" width="500" height="500" style="text-align:center; margin: 0 auto;"></canvas>
+      </div>
+
+      <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 5%; max-width: 500px; max-height: 750px;">
+        <h1 style="font-size: 40px; color: #6B6B6B; margin-top: 5%;">By Subregion</h1>
+        <canvas id="subregions" width="500" height="500" style="text-align:center; margin: 0 auto;"></canvas>
+      </div>
+
+      <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 5%; max-width: 500px; max-height: 750px;">
+        <h1 style="font-size: 40px; color: #6B6B6B; margin-top: 5%;">By Country (Top 9)</h1>
+        <canvas id="countries" width="500" height="500" style="text-align:center; margin: 0 auto;"></canvas>
+      </div>
+
+      </div>
 
   <script>
 
+function scrollToStats() {
+  document.getElementById("statistics-container").scrollIntoView({
+    behavior: 'smooth'
+  });
+}
 
 var linksList =  JSON.parse('{{ links | escapejs }}')
 
+var countryList = JSON.parse('{{ countries | escapejs }}')
+countries = countryList;
+console.log(Object.values(countries));
+
+var listOfCountries = [];
+var listOfCountriesPops = [];
+for(i = 0; i < countries.length; i++) {
+  listOfCountries.push(countries[i].country);
+  listOfCountriesPops.push(countries[i].population);
+}
+
+
+var subregionsList = JSON.parse('{{ subregions | escapejs }}')
+subregions = subregionsList;
+console.log(subregions);
+
+var listOfSubRegions = [];
+var listOfSubRegionsPops = [];
+for(i = 0; i < subregions.length; i++) {
+  listOfSubRegions.push(subregions[i].subregion);
+  listOfSubRegionsPops.push(subregions[i].population);
+}
+
+var regionsList = JSON.parse('{{ regions | escapejs }}')
+regions = regionsList;
+console.log(regions);
+
+var listOfRegions = [];
+var listOfRegionsPops = [];
+for(i = 0; i < regions.length; i++) {
+  listOfRegions.push(regions[i].region);
+  listOfRegionsPops.push(regions[i].population);
+}
+
+console.log(listOfRegions);
 
 var obj = linksList;
-console.log(obj[1].headline);
+console.log(obj);
 
 mapboxgl.accessToken = "pk.eyJ1IjoieW96bm9iIiwiYSI6ImNrOW9zd3plbTA0M2wzZnFzOWtjY245bnMifQ.CBO500KFH39b4Rc2U6L95Q";
 
 /* Map: This represents the map on the page. */
 var map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/light-v10",
+  style: "mapbox://styles/yoznob/cka32sl3x00g01ipgsgbxgep3",
   zoom: 0.21,
   center: [-41.6691,42.6109]
 });
 var geojson =  JSON.parse('{{ geo_json_string | escapejs }}')
 console.log(geojson)
 map.on("load", function () {
+var layers = ['0-100', '100-1,000', '1,000-10,000', '10,000-100,000', '100,000-250,000', '250,000-500,000', '500,000-1,000,000', '1,000,000-2,500,000', '2,500,000-5,000,000', '5,000,000+'];
+var colors = ['#ffffff', '#decece', '#debaba', '#e5a9a9', '#ed9191', '#f27878', '#f65a5a', '#f55151', '#ff0505', '#9e0000'];
+for (i = 0; i < layers.length; i++) {
+  var layer = layers[i];
+  var color = colors[i];
+  var item = document.createElement('div');
+  var key = document.createElement('span');
+  key.className = 'legend-key';
+  key.style.backgroundColor = color;
+
+  var value = document.createElement('span');
+  value.innerHTML = layer;
+  item.appendChild(key);
+  item.appendChild(value);
+  legend.appendChild(item);
+}
+map.on('mousemove', function(e) {
+  var countries = map.queryRenderedFeatures(e.point, {
+    layers: ['country data']
+  });
+
+  if (countries.length > 0) {
+    document.getElementById('features').innerHTML = '<h2 style="margin-left: 10px;"><b>' + countries[0].properties.ADMIN + '</b></h2>' +
+    '<p>' + countries[0].properties.population.toLocaleString() + " People" + '</p>';
+  } else {
+    document.getElementById('features').innerHTML = '<h3>' + "Country of Origin: Refugees and People in Refugee-like Situations" + '</h3>' +
+    '<div><h2 style="padding-left: 3%">' + "Hover over a country!" + '</h2></div>'
+  }
+});
   /* Image: An image is loaded and added to the map. */
   map.loadImage("https://img.icons8.com/cotton/48/000000/camping-tent.png", function(error, image) {
       if (error) throw error;
@@ -104,7 +291,217 @@ map.on("load", function () {
 });
 
 
+
+
   </script>
+
+
+
+
+<script>
+
+  for(const item of Object.values(regions)) {
+    console.log(item.population);
+  }
+
+  regionsIter = Object.entries(regions);
+  console.log(Object.values(listOfRegions));
+var ctx = document.getElementById('regions').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: listOfRegions,
+        datasets: [{
+            label: 'Population',
+            data: listOfRegionsPops,
+            backgroundColor: [
+             '#FFB7B2', '#B3DFEC', '#F6AC5A', '#B5EAD7', '#F282A7', '#E2F0CB', '#F0725C',  '#B9C0EA', '#E8A5CC'
+            ],
+            borderColor: [
+
+            ],
+            borderWidth: 0
+        }]
+    },
+    options: {
+
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          margin: {
+              left: 0
+          }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                  max: 12000000,
+                  min: 0,
+                  stepSize: 1000000,
+                  fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+                  fontStyle: 'bold',
+                  fontSize: 14,
+                }
+            }],
+            xAxes: [{
+              ticks: {
+                fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+                fontStyle: 'bold',
+                fontSize: 12,
+              }
+
+            }],
+        },
+
+        legend: {
+          display: false,
+          labels: {
+             fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+             fontStyle: 'bold',
+             fontSize: 14,
+
+          },
+        },
+
+        plugins: {
+          deferred: {           // enabled by default
+              xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+              yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+              delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        }
+
+    }
+});
+
+
+
+</script>
+
+<script>
+countryIter = Object.values(countries);
+
+var ctx = document.getElementById('subregions').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+
+        labels: listOfSubRegions,
+        datasets: [{
+            label: 'Population',
+            data: listOfSubRegionsPops,
+            backgroundColor: [
+             '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
+
+            ],
+            borderColor: [
+
+             '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
+
+            ],
+            fill: false,
+            borderWidth: 3,
+            pointRadius: 7,
+
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          margin: {
+              left: 0
+          }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                  max: 8000000,
+                  min: 0,
+                  stepSize: 1000000,
+                  fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+                  fontStyle: 'bold',
+                  fontSize: 14,
+                }
+            }],
+            xAxes: [{
+              ticks: {
+                fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+                fontStyle: 'bold',
+                fontSize: 11,
+              }
+
+            }],
+        },
+
+        legend: {
+          display: false,
+          labels: {
+             fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+             fontStyle: 'bold',
+             fontSize: 14,
+
+          },
+        },
+
+        plugins: {
+          deferred: {           // enabled by default
+              xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+              yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+              delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        }
+
+    }
+});
+
+</script>
+
+<script>
+var ctx = document.getElementById('countries').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: listOfCountries,
+        datasets: [{
+            label: '# of Votes',
+            data: listOfCountriesPops,
+            backgroundColor: [
+             '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
+
+            ],
+            borderColor: [
+             '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
+
+            ],
+            borderWidth: 0
+        }]
+    },
+    options: {
+
+        responsive: true,
+        maintainAspectRatio: true,
+        legend: {
+          labels: {
+             fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+             fontStyle: 'bold',
+             fontSize: 14,
+
+          },
+        },
+        plugins: {
+          deferred: {           // enabled by default
+              xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+              yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+              delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        }
+
+
+    }
+});
+
+</script>
 
 </body>
 </html>

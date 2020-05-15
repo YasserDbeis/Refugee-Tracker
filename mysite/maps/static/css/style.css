@@ -1,3 +1,4 @@
+
 a.donation {
   background-color: #5692CE;
   box-shadow: 5px 5px 0px #3e84c9;
@@ -19,6 +20,7 @@ a.donation:active {
   box-shadow: none;
   top: 5px;
 }
+
 
 .title {
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
@@ -70,3 +72,10 @@ h2 > a {
     color:white;
 
 }
+
+#statistics-container {
+    max-width: 100%;
+    padding: 3%;
+}
+
+
