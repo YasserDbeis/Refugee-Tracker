@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.gis.geos import GEOSGeometry, Point, fromstr
 from django.contrib.gis.db import models
-from djgeojson.fields import PointField
+
 
 # Create your models here.
 
@@ -20,4 +20,11 @@ class Location(models.Model):
     def __str__(self):
         return "{}, {} - {}, {}".format(self.city, self.state, self.lat, self.lon)
 
+class Population(models.Model):
+    region = models.CharField(max_length=50)
+    subRegion = models.CharField(max_length=50)
+    origin = models.CharField(max_length=50)
+    refugeePop = models.IntegerField()
 
+    def __str__(self):
+        return "region: {}, sub-region: {}, origin: {}, refugee population: {}".format(self.region, self.subRegion, self.origin, self.refugeePop)

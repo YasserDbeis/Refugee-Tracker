@@ -14,7 +14,7 @@ import os
 import django_heroku
 import django_heroku
 from os import environ
-# GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300' ##Comment out for Heroku
+GDAL_LIBRARY_PATH = r'C:\OSGeo4W\bin\gdal300' ##Comment out for Heroku
 # django_heroku.settings(locals())
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -108,7 +108,7 @@ DATABASES = {
 
 import dj_database_url
 db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env) ##UNCOMMENT FOR HEROKU
+# DATABASES['default'].update(db_from_env) ##UNCOMMENT FOR HEROKU
 
 # GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
 #
@@ -125,7 +125,7 @@ if _GEOS_LIBRARY_PATH:
 # DATABASES['default] = {default': dj_database_url.config()}
 # db_from_env = dj_database_url.config()
 # DATABASES['default'].update(db_from_env)
-DATABASES['default'] = dj_database_url.config() ##UNCOMMENT FOR HEROKU
+# DATABASES['default'] = dj_database_url.config() ##UNCOMMENT FOR HEROKU
 # DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 # DATABASES['default'] =  dj_database_url.config()
@@ -176,7 +176,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-django_heroku.settings(locals()) ##UNCOMMENT FOR HEROKU
+# django_heroku.settings(locals()) ##UNCOMMENT FOR HEROKU
 DATABASES['default']['ENGINE'] = "django.contrib.gis.db.backends.postgis"
 
 
