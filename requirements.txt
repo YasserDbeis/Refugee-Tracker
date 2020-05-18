@@ -18,3 +18,6 @@ sqlparse==0.3.1
 whitenoise==5.0.1
 jsonfield==3.1.0
 pynytimes==0.2.1
+pyunsplash==1.0.0
+flickr-api==0.7.3
+newsapi-python==0.2.6
