@@ -11,7 +11,7 @@ from django.contrib.gis.geos import Point
 from django.db.models import Sum
 from pynytimes import NYTAPI
 import logging
-import datetime
+from datetime import datetime, timedelta
 from newsapi import NewsApiClient
 import flickr_api
 from flickr_api import Walker, Photo
@@ -43,7 +43,7 @@ def index(request):
     for query, iso2 in querySet:
     
         all_articles = newsapi.get_everything(q=query,
-                                              from_param='2020-04-16',
+                                              from_param=datetime.datetime.now().date() - timedelta(days=30),
                                               to=datetime.datetime.now().date(),
                                               language='en',
                                               sort_by='relevancy',
