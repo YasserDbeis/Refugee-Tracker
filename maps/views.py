@@ -11,12 +11,10 @@ from django.contrib.gis.geos import Point
 from django.db.models import Sum
 from pynytimes import NYTAPI
 import logging
-from pyunsplash import PyUnsplash
 import datetime
 from newsapi import NewsApiClient
 import flickr_api
 from flickr_api import Walker, Photo
-api_key = 'OGTh9qMJzCeOkrejbUckJdweRL5hGWKLYAgtEHpsdgk'
 nyt = NYTAPI("n0zstttYijH85qvE5B25zpdcY6VCoAW0")
 flickr_api.set_keys(api_key = '1e68e420d9c8bd0e33301429630cf3b5', api_secret = '67a16ddaf7414f8f')
 
@@ -42,31 +40,31 @@ def index(request):
     newsapi = NewsApiClient(api_key='e7574739bccf4313bf4f01f06774802f')
 
     links = []
-    # for query, iso2 in querySet:
-    #
-    #     all_articles = newsapi.get_everything(q=query,
-    #                                           from_param='2020-04-16',
-    #                                           to=datetime.datetime.now().date(),
-    #                                           language='en',
-    #                                           sort_by='relevancy',
-    #                                           page=1)
-    #     countryToList = {}
-    #
-    #     if (all_articles['totalResults'] is 0):
-    #         all_articles = newsapi.get_everything(q='Refugee Camps',
-    #                                               from_param='2020-04-16',
-    #                                               to='2020-05-16',
-    #                                               language='en',
-    #                                               sort_by='relevancy',
-    #                                               page=1)
-    #     subList = []
-    #     for article in all_articles['articles']:
-    #         info = {'url': (article['url']),
-    #                 'headline': (str(article['title']).replace(u"\u2018", "'").replace(u"\u2019", "'"))}
-    #         subList.append(info)
-    #
-    #     countryToList[iso2] = subList
-    #     links.append(countryToList)
+    for query, iso2 in querySet:
+    
+        all_articles = newsapi.get_everything(q=query,
+                                              from_param='2020-04-16',
+                                              to=datetime.datetime.now().date(),
+                                              language='en',
+                                              sort_by='relevancy',
+                                              page=1)
+        countryToList = {}
+    
+        if (all_articles['totalResults'] is 0):
+            all_articles = newsapi.get_everything(q='Refugee Camps',
+                                                  from_param='2020-04-16',
+                                                  to='2020-05-16',
+                                                  language='en',
+                                                  sort_by='relevancy',
+                                                  page=1)
+        subList = []
+        for article in all_articles['articles']:
+            info = {'url': (article['url']),
+                    'headline': (str(article['title']).replace(u"\u2018", "'").replace(u"\u2019", "'"))}
+            subList.append(info)
+    
+        countryToList[iso2] = subList
+        links.append(countryToList)
 
     linksJson = json.dumps(links)
 
@@ -119,12 +117,10 @@ def index(request):
 
 
     # instantiate PyUnsplash object
-    pu = PyUnsplash(api_key=api_key)
 
     # pyunsplash logger defaults to level logging.ERROR
     # If you need to change that, use getLogger/setLevel
     # on the module logger, like this:
-    logging.getLogger("pyunsplash").setLevel(logging.DEBUG)
 
     # Start with the generic collection, maximize number of items
     # note: this will run until all photos of all collections have
@@ -147,9 +143,9 @@ def index(request):
 
     return render(request, "maps/index.html", {'geo_json_string' : geo_json_string, 'links' : linksJson, 'regions' : regionsPop, 'subregions' : subregionsPop, 'countries' : countriesPop, 'images' : images})
 
-def stories(request):
+# def stories(request):
 
 
 
-    return render(request, "maps/index.html", {'images' : images})
+#     return render(request, "maps/index.html", {'images' : images})
 
