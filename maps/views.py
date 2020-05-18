@@ -43,7 +43,7 @@ def index(request):
     for query, iso2 in querySet:
     
         all_articles = newsapi.get_everything(q=query,
-                                              from_param='2020-04-17',
+                                              from_param=datetime.datetime.now().date() - timedelta(days=29),
                                               to=datetime.datetime.now().date(),
                                               language='en',
                                               sort_by='relevancy',
@@ -52,8 +52,8 @@ def index(request):
     
         if (all_articles['totalResults'] is 0):
             all_articles = newsapi.get_everything(q='Refugee Camps',
-                                                  from_param='2020-04-16',
-                                                  to='2020-05-16',
+                                                  from_param=datetime.datetime.now().date() - timedelta(days=29),
+                                                  to=datetime.datetime.now().date(),
                                                   language='en',
                                                   sort_by='relevancy',
                                                   page=1)
