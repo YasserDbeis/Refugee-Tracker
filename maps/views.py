@@ -43,7 +43,7 @@ def index(request):
     for query, iso2 in querySet:
     
         all_articles = newsapi.get_everything(q=query,
-                                              from_param=datetime.datetime.now().date() - timedelta(days=29),
+                                              from_param='2020-04-17',
                                               to=datetime.datetime.now().date(),
                                               language='en',
                                               sort_by='relevancy',
