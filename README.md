@@ -4,4 +4,4 @@ Built with Django, PostgreSQL, PostGIS, News API, Flickr API, and the UNHCR refu
 
 Dedicated to my favorite charity organization: MedGlobal (https://medglobal.org/)
 
-Production build: yasser-city-tracker.herokuapp.com
+Production build: https://yasser-city-tracker.herokuapp.com
