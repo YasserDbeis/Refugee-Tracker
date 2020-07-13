@@ -182,7 +182,7 @@ var images =  JSON.parse('{{ images | escapejs }}');
 
 // console.log(images);
 // console.log(images[0].link);
-for(i = 0; i < 20; i++) {
+for(i = 3; i < 20; i++) {
   console.log(images[i].link);
   var elemAdd = document.createElement("DIV");
   var elemImg = document.createElement("IMG");
@@ -341,7 +341,14 @@ map.on('mousemove', function(e) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
             var randArticle = Math.floor(Math.random() * 20);
-            var str = linksDict[state][randArticle].headline;
+            var str
+            if(linksDict[state][randArticle]) {
+              str = linksDict[state][randArticle].headline;
+            }
+            else {
+              str = "No Recent Article Available"
+            }
+            
             var res = str.link(linksDict[state][randArticle].url);
 
             new mapboxgl.Popup()
