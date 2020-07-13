@@ -341,15 +341,21 @@ map.on('mousemove', function(e) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
             var randArticle = Math.floor(Math.random() * 20);
-            var str
+            var str;
             if(linksDict[state][randArticle]) {
               str = linksDict[state][randArticle].headline;
             }
             else {
-              str = "No Recent Article Available"
+              str = "No Recent Article Available";
             }
             
-            var res = str.link(linksDict[state][randArticle].url);
+            var res;
+            if(linksDict[state][randArticle]) {
+              res = str.link(linksDict[state][randArticle].url);
+            }
+            else {
+              res = "";
+            }
 
             new mapboxgl.Popup()
 
