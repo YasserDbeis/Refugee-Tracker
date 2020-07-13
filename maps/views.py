@@ -68,7 +68,7 @@ def index(request):
 
     linksJson = json.dumps(links)
 
-    print(linksJson)
+    # print(linksJson)
 
     #end of articles - start of regional stats queries
 
@@ -102,7 +102,7 @@ def index(request):
     countriesQuery = Population.objects.values_list("origin", flat=True).order_by("refugeePop").distinct()
     countriesList = list(countriesQuery)
     countriesList = countriesList[-9:]
-    print(countriesList)
+    # print(countriesList)
     countriesJSONs = []
 
     for country in countriesList:
