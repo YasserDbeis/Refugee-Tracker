@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <!--AIzaSyAjh_im6cGqqqGrZ_WkIzKszcOffACMTH8-->
 <head>
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js"></script>
   <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css" rel="stylesheet" />
   <link rel="shortcut icon" type="image/png" href="https://img.icons8.com/dusk/64/000000/globe-earth.png"/>
@@ -21,7 +22,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred"></script>
   <!-- bttn.css -->
   <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
-
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
     <style>
 
@@ -29,7 +30,6 @@
     #map { position:relative; top:0; bottom:0; width:100%; height:100%;}
     #map-container { position:relative; top:0; bottom:0; height:70%; width: 100%;}
 
-    <style>
       h3 {
         margin: 10px;
         font-size: 1.8em;
@@ -96,6 +96,25 @@
         bottom: 0;
       }
 
+      .static-banner {
+        position: absolute;
+        background: hsla(0, 0%, 0%, 0.3);
+        line-height: 1.0;
+        z-index: 1;
+        padding: 7px 25px;
+        font-size: 26px;
+        color: white;
+        pointer-events: none;
+        font-weight: 250;
+      }
+
+      .static-banner1 {
+        left: 10px;
+        top: 10px;
+      }
+
+
+
     </style>
 </head>
 
@@ -104,25 +123,28 @@
 
   <div style="margin: 2em auto; position: relative; margin-bottom: 3.75em; text-align: center;">
     <h1 class="title" style="text-align: center; font-size: 60px; margin-top: 10px; margin-bottom: 15px; color: #6B6B6B">Refugee & IDP Camp Tracker</h1>
-
+    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; color: #7B8A8C; display: inline-block;">
+        <a href="javascript:;" onclick="scrollToImages()" class="donation" style="background-color: #f27878;">Brigades</a>
+    </h2>
     <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; color: #7B8A8C; display: inline-block;">
         <a href="https://medglobal.org/donate/" class="donation">Donate</a>
     </h2>
     <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; color: #7B8A8C; display: inline-block;">
         <a href="javascript:;" onclick="scrollToStats()" class="donation" style="background-color: #e5a9a9;">Statistics</a>
     </h2>
+
   </div>
 
 
   <div id="map-container" style="text-align: center;">
-    <div style="position=absolute;" id="map"></div>
+    <div style="position: absolute;" id="map"></div>
     <div class='map-overlay' id='features'><h3>Country of Origin: Refugees and People in Refugee-like Situations</h3>
     <div id='pd'><h2 style="padding-left: 3%">Hover over a country!</h2></div></div>
     <div class='map-overlay' id='legend'></div><div></div>
 
   </div>
 
-    <div id="statistics-container" >
+    <div id="statistics-container">
       <h1 style="text-align: center; font-size: 60px; color: #6B6B6B; margin-top: 1%;">Statistics</h1>
       <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 5%; max-width: 500px; max-height: 750px;">
         <h1 style="font-size: 40px; color: #6B6B6B; margin-top: 5%;">By Region</h1>
@@ -134,14 +156,57 @@
         <canvas id="subregions" width="500" height="500" style="text-align:center; margin: 0 auto;"></canvas>
       </div>
 
-      <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 5%; max-width: 500px; max-height: 750px;">
+      <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 1%; max-width: 500px; max-height: 750px;">
         <h1 style="font-size: 40px; color: #6B6B6B; margin-top: 5%;">By Country (Top 9)</h1>
         <canvas id="countries" width="500" height="500" style="text-align:center; margin: 0 auto;"></canvas>
       </div>
+    </div>
 
+    <div id="images-container" style="margin: 10%">
+      <h1 style="text-align: center; font-size: 45px; color: #6B6B6B; margin: 2%;">MedGlobal Medical Brigade</h1>
+      <div id="main-carousel" class="main-carousel">
+        <div class="static-banner">Columbia/Venezuela March 2020</div>
+        <div class="carousel-cell"><img style="height: 500px" class="carousel-image" src="https://medglobal.org/wp-content/uploads/2019/05/Dr.Kahler_stethoscope-1024x683.png"></div>
       </div>
+    </div>
+
+    <div style="margin: 10%">
+      <h1 style="text-align: center; font-size: 45px; color: #6B6B6B; margin: 2%;">Dedicated to my favorite charity, MedGlobal</h1>
+    </div>
+
+
 
   <script>
+
+var images =  JSON.parse('{{ images | escapejs }}');
+
+console.log(images);
+console.log(images[0].link);
+for(i = 0; i < 20; i++) {
+  console.log(images[i].link);
+  var elemAdd = document.createElement("DIV");
+  var elemImg = document.createElement("IMG");
+  elemImg.type = "image";
+  elemImg.src = images[i].link;
+  elemImg.className = "carousel-image";
+  elemImg.width = "500";
+  elemAdd.className = "carousel-cell";
+  elemAdd.appendChild(elemImg);
+  console.log(elemAdd.innerHTML);
+  document.getElementById("main-carousel").appendChild(elemAdd);
+}
+
+
+
+$('.main-carousel').flickity({
+  // options
+  autoPlay: 1500,
+  cellSelector: '.carousel-cell',
+  adaptiveHeight: true,
+  imagesLoaded: true,
+  cellAlign: 'center',
+  contain: true,
+});
 
 function scrollToStats() {
   document.getElementById("statistics-container").scrollIntoView({
@@ -149,7 +214,22 @@ function scrollToStats() {
   });
 }
 
+function scrollToImages() {
+  document.getElementById("images-container").scrollIntoView({
+    behavior: 'smooth'
+  });
+}
+
 var linksList =  JSON.parse('{{ links | escapejs }}')
+
+var linksDict = {};
+for(i = 0; i < linksList.length; i++) {
+  Object.assign(linksDict, linksList[i]);
+}
+
+console.log(linksDict);
+
+
 
 var countryList = JSON.parse('{{ countries | escapejs }}')
 countries = countryList;
@@ -185,10 +265,7 @@ for(i = 0; i < regions.length; i++) {
   listOfRegionsPops.push(regions[i].population);
 }
 
-console.log(listOfRegions);
 
-var obj = linksList;
-console.log(obj);
 
 mapboxgl.accessToken = "pk.eyJ1IjoieW96bm9iIiwiYSI6ImNrOW9zd3plbTA0M2wzZnFzOWtjY245bnMifQ.CBO500KFH39b4Rc2U6L95Q";
 
@@ -263,9 +340,9 @@ map.on('mousemove', function(e) {
             while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
-            var randArticle = Math.floor(Math.random() * 50);
-            var str = linksList[randArticle].headline;
-            var res = str.link(linksList[randArticle].url);
+            var randArticle = Math.floor(Math.random() * 20);
+            var str = linksDict[state][randArticle].headline;
+            var res = str.link(linksDict[state][randArticle].url);
 
             new mapboxgl.Popup()
 
@@ -305,7 +382,6 @@ map.on('mousemove', function(e) {
   }
 
   regionsIter = Object.entries(regions);
-  console.log(Object.values(listOfRegions));
 var ctx = document.getElementById('regions').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',

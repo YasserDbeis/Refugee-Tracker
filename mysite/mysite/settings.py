@@ -23,7 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'z@z5u7y2thz#)4=s!tg33_)1sc#qpx5rzr-mpcfoea*we&n1c9'
-
+NEWSAPI_KEY = 'e7574739bccf4313bf4f01f06774802f'
+FLICKRAPI_KEY = '1e68e420d9c8bd0e33301429630cf3b5'
+FLICKRAPI_SECRET = '67a16ddaf7414f8f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
