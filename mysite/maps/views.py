@@ -15,10 +15,17 @@ from newsapi import NewsApiClient
 import flickr_api
 from flickr_api import Walker, Photo
 import datetime
+import os, sys
+# sys.path.insert(1, '/path/to/application/app/folder')
 
-from mysite.mysite.settings import NEWSAPI_KEY
-from mysite.mysite.settings import FLICKRAPI_KEY
-from mysite.mysite.settings import FLICKRAPI_SECRET
+sys.path.append(os.path.realpath('.'))
+
+from .keys import NEWSAPI_KEY
+from .keys import FLICKRAPI_KEY
+from .keys import FLICKRAPI_SECRET
+from .keys import MAPBOX_KEY
+
+MAPBOX_KEY = json.dumps(MAPBOX_KEY)
 
 newsapi = NewsApiClient(api_key=NEWSAPI_KEY)
 flickr_api.set_keys(api_key = FLICKRAPI_KEY, api_secret = FLICKRAPI_SECRET)
@@ -142,7 +149,7 @@ def index(request):
 
     images = json.dumps(images)
 
-    return render(request, "maps/index.html", {'geo_json_string' : geo_json_string, 'links' : linksJson, 'regions' : regionsPop, 'subregions' : subregionsPop, 'countries' : countriesPop, 'images' : images})
+    return render(request, "maps/index.html", {'geo_json_string' : geo_json_string, 'links' : linksJson, 'regions' : regionsPop, 'subregions' : subregionsPop, 'countries' : countriesPop, 'images' : images, 'MAPBOX_KEY' : MAPBOX_KEY})
 
 # def stories(request):
 
