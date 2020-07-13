@@ -1,0 +1,6 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/mysite/mysite/settings.py
+/mysite/package-lock.json
+/mysite/node_modules/
