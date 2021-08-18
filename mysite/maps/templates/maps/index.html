@@ -180,24 +180,18 @@
 
 var images =  JSON.parse('{{ images | escapejs }}');
 
-console.log(images);
-console.log(images[0].link);
-for(i = 1; i < 20; i++) {
-  console.log(images[i].link);
+for(i = 0; i < images.length; i++) {
   var elemAdd = document.createElement("DIV");
   var elemImg = document.createElement("IMG");
   elemImg.type = "image";
-  elemImg.src = images[i].link;
+  elemImg.src = images[i];
   elemImg.className = "carousel-image";
   elemImg.width = "700";
   elemImg.height = "500";
   elemAdd.className = "carousel-cell";
   elemAdd.appendChild(elemImg);
-  console.log(elemAdd.innerHTML);
   document.getElementById("main-carousel").appendChild(elemAdd);
 }
-
-
 
 $('.main-carousel').flickity({
   // options
@@ -228,13 +222,8 @@ for(i = 0; i < linksList.length; i++) {
   Object.assign(linksDict, linksList[i]);
 }
 
-console.log(linksDict);
-
-
-
 var countryList = JSON.parse('{{ countries | escapejs }}')
 countries = countryList;
-console.log(Object.values(countries));
 
 var listOfCountries = [];
 var listOfCountriesPops = [];
@@ -243,10 +232,8 @@ for(i = 0; i < countries.length; i++) {
   listOfCountriesPops.push(countries[i].population);
 }
 
-
 var subregionsList = JSON.parse('{{ subregions | escapejs }}')
 subregions = subregionsList;
-console.log(subregions);
 
 var listOfSubRegions = [];
 var listOfSubRegionsPops = [];
@@ -257,7 +244,6 @@ for(i = 0; i < subregions.length; i++) {
 
 var regionsList = JSON.parse('{{ regions | escapejs }}')
 regions = regionsList;
-console.log(regions);
 
 var listOfRegions = [];
 var listOfRegionsPops = [];
@@ -267,7 +253,6 @@ for(i = 0; i < regions.length; i++) {
 }
 
 var mapbox_key = JSON.parse('{{ MAPBOX_KEY | escapejs }}')
-console.log(mapbox_key)
 //"pk.eyJ1IjoieW96bm9iIiwiYSI6ImNrOW9zd3plbTA0M2wzZnFzOWtjY245bnMifQ.CBO500KFH39b4Rc2U6L95Q"
 mapboxgl.accessToken = mapbox_key;
 
@@ -279,7 +264,6 @@ var map = new mapboxgl.Map({
   center: [-41.6691,42.6109]
 });
 var geojson =  JSON.parse('{{ geo_json_string | escapejs }}')
-console.log(geojson)
 map.on("load", function () {
 var layers = ['0-100', '100-1,000', '1,000-10,000', '10,000-100,000', '100,000-250,000', '250,000-500,000', '500,000-1,000,000', '1,000,000-2,500,000', '2,500,000-5,000,000', '5,000,000+'];
 var colors = ['#ffffff', '#decece', '#debaba', '#e5a9a9', '#ed9191', '#f27878', '#f65a5a', '#f55151', '#ff0505', '#9e0000'];
@@ -334,15 +318,13 @@ map.on('mousemove', function(e) {
             var state = e.features[0].properties.state;
             var reference = e.features[0].properties.reference;
 
-
-            console.log(reference)
             // Ensure that if the map is zoomed out such that multiple
             // copies of the feature are visible, the popup appears
             // over the copy being pointed to.
             while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
                 coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
             }
-            var randArticle = Math.floor(Math.random() * 20);
+            var randArticle = Math.floor(Math.random() * linksDict[state].length);
             var str;
             if(linksDict[state][randArticle]) {
               str = linksDict[state][randArticle].headline;
@@ -369,7 +351,6 @@ map.on('mousemove', function(e) {
 
         });
 
-
         // Change the cursor to a pointer when the mouse is over the places layer.
         map.on('mouseenter', 'markers', function() {
             map.getCanvas().style.cursor = 'pointer';
@@ -382,21 +363,10 @@ map.on('mousemove', function(e) {
     });
 });
 
-
-
-
   </script>
-
-
-
-
 <script>
 
-  for(const item of Object.values(regions)) {
-    console.log(item.population);
-  }
-
-  regionsIter = Object.entries(regions);
+regionsIter = Object.entries(regions);
 var ctx = document.getElementById('regions').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
@@ -415,7 +385,6 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
-
         responsive: true,
         maintainAspectRatio: true,
         layout: {
@@ -443,7 +412,6 @@ var myChart = new Chart(ctx, {
 
             }],
         },
-
         legend: {
           display: false,
           labels: {
@@ -453,7 +421,6 @@ var myChart = new Chart(ctx, {
 
           },
         },
-
         plugins: {
           deferred: {           // enabled by default
               xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
@@ -464,31 +431,25 @@ var myChart = new Chart(ctx, {
 
     }
 });
-
-
-
 </script>
 
 <script>
 countryIter = Object.values(countries);
 
 var ctx = document.getElementById('subregions').getContext('2d');
+
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-
         labels: listOfSubRegions,
         datasets: [{
             label: 'Population',
             data: listOfSubRegionsPops,
             backgroundColor: [
              '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
-
             ],
             borderColor: [
-
              '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
-
             ],
             fill: false,
             borderWidth: 3,
@@ -524,17 +485,14 @@ var myChart = new Chart(ctx, {
 
             }],
         },
-
         legend: {
           display: false,
           labels: {
              fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
              fontStyle: 'bold',
              fontSize: 14,
-
           },
         },
-
         plugins: {
           deferred: {           // enabled by default
               xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
@@ -545,7 +503,6 @@ var myChart = new Chart(ctx, {
 
     }
 });
-
 </script>
 
 <script>
@@ -569,7 +526,6 @@ var myChart = new Chart(ctx, {
         }]
     },
     options: {
-
         responsive: true,
         maintainAspectRatio: true,
         legend: {
@@ -577,7 +533,6 @@ var myChart = new Chart(ctx, {
              fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
              fontStyle: 'bold',
              fontSize: 14,
-
           },
         },
         plugins: {
@@ -587,8 +542,6 @@ var myChart = new Chart(ctx, {
               delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
           }
         }
-
-
     }
 });
 
