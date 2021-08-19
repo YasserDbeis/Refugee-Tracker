@@ -1,0 +1,597 @@
+{% load static %}
+<!DOCTYPE html>
+<!--AIzaSyAjh_im6cGqqqGrZ_WkIzKszcOffACMTH8-->
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.js"></script>
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v1.3.1/mapbox-gl.css" rel="stylesheet" />
+  <link rel="shortcut icon" type="image/png" href="https://img.icons8.com/dusk/64/000000/globe-earth.png"/>
+    <title>Refugee & IDP Camp Tracker</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- semantic UI -->
+  <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+  <!--Chart js-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <!-- deffered chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred"></script>
+  <!-- bttn.css -->
+  <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.css">
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+
+    <style>
+
+    body { margin:0; padding:0; background-color: #BFD5DF; }
+    #map { position:relative; top:0; bottom:0; width:100%; height:100%;}
+    #map-container { position:relative; top:0; bottom:0; height:70%; width: 100%;}
+
+      h3 {
+        margin: 10px;
+        font-size: 1.8em;
+      }
+      h3 {
+        margin: 10px;
+        font-size: 1.25em;
+      }
+      p {
+        font-size: 1.25em;
+        margin: 10px;
+        text-align: left;
+      }
+      .map-overlay {
+        padding-top: 1%;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.8);
+        margin-right: 20px;
+        border-radius: 3px;
+      }
+      #map {
+        position: relative;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+       #map-container {
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        top: 0;
+        bottom: 0;
+        width: 90%;
+      }
+      #features {
+        text-align: left;
+        top: 0;
+        height: 9em;
+        width: 20em;
+        top: 1%;
+      }
+      #legend {
+        text-align: left;
+        padding: 10px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        line-height: 18px;
+        font-size: 15px;
+        bottom: 4%;
+        right: 0;
+        height: 200px;
+        width: 200px;
+      }
+      .legend-key {
+        text-align: left;
+        display: inline-block;
+        border-radius: 20%;
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+      }
+      #pd {
+        bottom: 0;
+      }
+
+      .static-banner {
+        position: absolute;
+        background: hsla(0, 0%, 0%, 0.3);
+        line-height: 1.0;
+        z-index: 1;
+        padding: 7px 25px;
+        font-size: 26px;
+        color: white;
+        pointer-events: none;
+        font-weight: 250;
+      }
+
+      .static-banner1 {
+        left: 10px;
+        top: 10px;
+      }
+
+
+
+    </style>
+</head>
+
+<body>
+
+
+  <div style="margin: 2em auto; position: relative; margin-bottom: 3.75em; text-align: center;">
+    <h1 class="title" style="text-align: center; font-size: 60px; margin-top: 10px; margin-bottom: 15px; color: #6B6B6B">Refugee & IDP Camp Tracker</h1>
+    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; color: #7B8A8C; display: inline-block;">
+        <a href="javascript:;" onclick="scrollToImages()" class="donation" style="background-color: #f27878;">Brigades</a>
+    </h2>
+    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; color: #7B8A8C; display: inline-block;">
+        <a href="https://medglobal.org/donate/" class="donation">Donate</a>
+    </h2>
+    <h2 style="text-align: center; font-family: P22 Mackinac Pro,Georgia,serif; font-weight: 250; font-size: 27.5px; color: #7B8A8C; display: inline-block;">
+        <a href="javascript:;" onclick="scrollToStats()" class="donation" style="background-color: #e5a9a9;">Statistics</a>
+    </h2>
+
+  </div>
+
+
+  <div id="map-container" style="text-align: center;">
+    <div style="position: absolute;" id="map"></div>
+    <div class='map-overlay' id='features'><h3>Country of Origin: Refugees and People in Refugee-like Situations</h3>
+    <div id='pd'><h2 style="padding-left: 3%">Hover over a country!</h2></div></div>
+    <div class='map-overlay' id='legend'></div><div></div>
+
+  </div>
+
+    <div id="statistics-container">
+      <h1 style="text-align: center; font-size: 60px; color: #6B6B6B; margin-top: 1%;">Statistics</h1>
+      <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 5%; max-width: 500px; max-height: 750px;">
+        <h1 style="font-size: 40px; color: #6B6B6B; margin-top: 5%;">By Region</h1>
+        <canvas id="regions" width="500" height="500" style="text-align:center; margin: 0 auto;"></canvas>
+      </div>
+
+      <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 5%; max-width: 500px; max-height: 750px;">
+        <h1 style="font-size: 40px; color: #6B6B6B; margin-top: 5%;">By Subregion</h1>
+        <canvas id="subregions" width="500" height="500" style="text-align:center; margin: 0 auto;"></canvas>
+      </div>
+
+      <div style="text-align:center; margin: 0 auto; margin-top: 5%; margin-bottom: 1%; max-width: 500px; max-height: 750px;">
+        <h1 style="font-size: 40px; color: #6B6B6B; margin-top: 5%;">By Country (Top 9)</h1>
+        <canvas id="countries" width="500" height="500" style="text-align:center; margin: 0 auto;"></canvas>
+      </div>
+    </div>
+
+    <div id="images-container" style="margin: 10%">
+      <h1 style="text-align: center; font-size: 45px; color: #6B6B6B; margin: 2%;">MedGlobal Medical Brigade</h1>
+      <div id="main-carousel" class="main-carousel">
+        <div class="static-banner">Columbia/Venezuela March 2020</div>
+        <div class="carousel-cell"><img style="height: 500px" class="carousel-image" src="https://medglobal.org/wp-content/uploads/2019/05/Dr.Kahler_stethoscope-1024x683.png"></div>
+      </div>
+    </div>
+
+    <div style="margin: 10%">
+      <h1 style="text-align: center; font-size: 45px; color: #6B6B6B; margin: 2%;">Dedicated to my favorite charity, MedGlobal</h1>
+    </div>
+
+
+
+  <script>
+
+var images =  JSON.parse('{{ images | escapejs }}');
+
+// console.log(images);
+// console.log(images[0].link);
+for(i = 1; i < 20; i++) {
+  console.log(images[i].link);
+  var elemAdd = document.createElement("DIV");
+  var elemImg = document.createElement("IMG");
+  elemImg.type = "image";
+  elemImg.src = images[i].link;
+  elemImg.className = "carousel-image";
+  elemImg.width = "700";
+  elemImg.height = "500";
+  elemAdd.className = "carousel-cell";
+  elemAdd.appendChild(elemImg);
+  // console.log(elemAdd.innerHTML);
+  document.getElementById("main-carousel").appendChild(elemAdd);
+}
+
+
+
+$('.main-carousel').flickity({
+  // options
+  autoPlay: 1500,
+  cellSelector: '.carousel-cell',
+  adaptiveHeight: true,
+  imagesLoaded: true,
+  cellAlign: 'center',
+  contain: true,
+});
+
+function scrollToStats() {
+  document.getElementById("statistics-container").scrollIntoView({
+    behavior: 'smooth'
+  });
+}
+
+function scrollToImages() {
+  document.getElementById("images-container").scrollIntoView({
+    behavior: 'smooth'
+  });
+}
+
+var linksList =  JSON.parse('{{ links | escapejs }}')
+
+var linksDict = {};
+for(i = 0; i < linksList.length; i++) {
+  Object.assign(linksDict, linksList[i]);
+}
+
+// console.log(linksDict);
+
+
+
+var countryList = JSON.parse('{{ countries | escapejs }}')
+countries = countryList;
+// console.log(Object.values(countries));
+
+var listOfCountries = [];
+var listOfCountriesPops = [];
+for(i = 0; i < countries.length; i++) {
+  listOfCountries.push(countries[i].country);
+  listOfCountriesPops.push(countries[i].population);
+}
+
+
+var subregionsList = JSON.parse('{{ subregions | escapejs }}')
+subregions = subregionsList;
+// console.log(subregions);
+
+var listOfSubRegions = [];
+var listOfSubRegionsPops = [];
+for(i = 0; i < subregions.length; i++) {
+  listOfSubRegions.push(subregions[i].subregion);
+  listOfSubRegionsPops.push(subregions[i].population);
+}
+
+var regionsList = JSON.parse('{{ regions | escapejs }}')
+regions = regionsList;
+// console.log(regions);
+
+var listOfRegions = [];
+var listOfRegionsPops = [];
+for(i = 0; i < regions.length; i++) {
+  listOfRegions.push(regions[i].region);
+  listOfRegionsPops.push(regions[i].population);
+}
+
+
+
+mapboxgl.accessToken = "pk.eyJ1IjoieW96bm9iIiwiYSI6ImNrOW9zd3plbTA0M2wzZnFzOWtjY245bnMifQ.CBO500KFH39b4Rc2U6L95Q";
+
+/* Map: This represents the map on the page. */
+var map = new mapboxgl.Map({
+  container: "map",
+  style: "mapbox://styles/yoznob/cka32sl3x00g01ipgsgbxgep3",
+  zoom: 0.21,
+  center: [-41.6691,42.6109]
+});
+var geojson =  JSON.parse('{{ geo_json_string | escapejs }}')
+// console.log(geojson)
+map.on("load", function () {
+var layers = ['0-100', '100-1,000', '1,000-10,000', '10,000-100,000', '100,000-250,000', '250,000-500,000', '500,000-1,000,000', '1,000,000-2,500,000', '2,500,000-5,000,000', '5,000,000+'];
+var colors = ['#ffffff', '#decece', '#debaba', '#e5a9a9', '#ed9191', '#f27878', '#f65a5a', '#f55151', '#ff0505', '#9e0000'];
+for (i = 0; i < layers.length; i++) {
+  var layer = layers[i];
+  var color = colors[i];
+  var item = document.createElement('div');
+  var key = document.createElement('span');
+  key.className = 'legend-key';
+  key.style.backgroundColor = color;
+
+  var value = document.createElement('span');
+  value.innerHTML = layer;
+  item.appendChild(key);
+  item.appendChild(value);
+  legend.appendChild(item);
+}
+map.on('mousemove', function(e) {
+  var countries = map.queryRenderedFeatures(e.point, {
+    layers: ['country data']
+  });
+
+  if (countries.length > 0) {
+    document.getElementById('features').innerHTML = '<h2 style="margin-left: 10px;"><b>' + countries[0].properties.ADMIN + '</b></h2>' +
+    '<p>' + countries[0].properties.population.toLocaleString() + " People" + '</p>';
+  } else {
+    document.getElementById('features').innerHTML = '<h3>' + "Country of Origin: Refugees and People in Refugee-like Situations" + '</h3>' +
+    '<div><h2 style="padding-left: 3%">' + "Hover over a country!" + '</h2></div>'
+  }
+});
+  /* Image: An image is loaded and added to the map. */
+  map.loadImage("https://img.icons8.com/cotton/48/000000/camping-tent.png", function(error, image) {
+      if (error) throw error;
+      map.addImage("custom-marker", image);
+      /* Style layer: A style layer ties together the source and image and specifies how they are displayed on the map. */
+      map.addLayer({
+        id: "markers",
+        type: "symbol",
+        /* Source: A data source specifies the geographic coordinate where the image marker gets placed. */
+        source: {
+          type: "geojson",
+          data: geojson
+        },
+        layout: {
+          "icon-image": "custom-marker",
+        }
+      });
+
+      map.on('click', 'markers', function(e) {
+            var coordinates = e.features[0].geometry.coordinates.slice();
+            var city = e.features[0].properties.city;
+            var state = e.features[0].properties.state;
+            var reference = e.features[0].properties.reference;
+
+
+            // console.log(reference)
+            // Ensure that if the map is zoomed out such that multiple
+            // copies of the feature are visible, the popup appears
+            // over the copy being pointed to.
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+            var randArticle = Math.floor(Math.random() * 20);
+            var str;
+            if(linksDict[state][randArticle]) {
+              str = linksDict[state][randArticle].headline;
+            }
+            else {
+              str = "No Recent Article Available";
+            }
+            
+            var res;
+            if(linksDict[state][randArticle]) {
+              res = str.link(linksDict[state][randArticle].url);
+            }
+            else {
+              res = "No Recent Article Available";
+            }
+
+            new mapboxgl.Popup()
+
+                .setLngLat(coordinates)
+                .setHTML('<h1 class="camp" style="text-align: center; font-size: 25px; margin-bottom: 10px; color: #6B6B6B">' + city + '</h1>' +
+                '<h2 class="camp2" style="text-align: center; font-size: 15px; margin-top: 20px; color: #6B6B6B">' + res +  '</h2>' +
+                '<h4 class="camp" style="text-align: center; font-size: 10px; margin-top: 20px; color: #6B6B6B">' + state +  '</h4>')
+                .addTo(map);
+
+        });
+
+
+        // Change the cursor to a pointer when the mouse is over the places layer.
+        map.on('mouseenter', 'markers', function() {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'markers', function() {
+            map.getCanvas().style.cursor = '';
+        });
+    });
+});
+
+
+
+
+  </script>
+
+
+
+
+<script>
+
+  // for(const item of Object.values(regions)) {
+  //   console.log(item.population);
+  // }
+
+  regionsIter = Object.entries(regions);
+var ctx = document.getElementById('regions').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: listOfRegions,
+        datasets: [{
+            label: 'Population',
+            data: listOfRegionsPops,
+            backgroundColor: [
+             '#FFB7B2', '#B3DFEC', '#F6AC5A', '#B5EAD7', '#F282A7', '#E2F0CB', '#F0725C',  '#B9C0EA', '#E8A5CC'
+            ],
+            borderColor: [
+
+            ],
+            borderWidth: 0
+        }]
+    },
+    options: {
+
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          margin: {
+              left: 0
+          }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                  max: 12000000,
+                  min: 0,
+                  stepSize: 1000000,
+                  fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+                  fontStyle: 'bold',
+                  fontSize: 14,
+                }
+            }],
+            xAxes: [{
+              ticks: {
+                fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+                fontStyle: 'bold',
+                fontSize: 12,
+              }
+
+            }],
+        },
+
+        legend: {
+          display: false,
+          labels: {
+             fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+             fontStyle: 'bold',
+             fontSize: 14,
+
+          },
+        },
+
+        plugins: {
+          deferred: {           // enabled by default
+              xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+              yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+              delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        }
+
+    }
+});
+
+
+
+</script>
+
+<script>
+countryIter = Object.values(countries);
+
+var ctx = document.getElementById('subregions').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+
+        labels: listOfSubRegions,
+        datasets: [{
+            label: 'Population',
+            data: listOfSubRegionsPops,
+            backgroundColor: [
+             '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
+
+            ],
+            borderColor: [
+
+             '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
+
+            ],
+            fill: false,
+            borderWidth: 3,
+            pointRadius: 7,
+
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        layout: {
+          margin: {
+              left: 0
+          }
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                  max: 8000000,
+                  min: 0,
+                  stepSize: 1000000,
+                  fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+                  fontStyle: 'bold',
+                  fontSize: 14,
+                }
+            }],
+            xAxes: [{
+              ticks: {
+                fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+                fontStyle: 'bold',
+                fontSize: 11,
+              }
+
+            }],
+        },
+
+        legend: {
+          display: false,
+          labels: {
+             fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+             fontStyle: 'bold',
+             fontSize: 14,
+
+          },
+        },
+
+        plugins: {
+          deferred: {           // enabled by default
+              xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+              yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+              delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        }
+
+    }
+});
+
+</script>
+
+<script>
+var ctx = document.getElementById('countries').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: listOfCountries,
+        datasets: [{
+            label: '# of Votes',
+            data: listOfCountriesPops,
+            backgroundColor: [
+             '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
+
+            ],
+            borderColor: [
+             '#FFB7B2', '#B3DFEC', '#F6AC5A','#E2F0CB', '#B5EAD7', '#F282A7', '#F0725C',  '#B9C0EA', '#E8A5CC'
+
+            ],
+            borderWidth: 0
+        }]
+    },
+    options: {
+
+        responsive: true,
+        maintainAspectRatio: true,
+        legend: {
+          labels: {
+             fontFamily: "'Century Gothic', CenturyGothic, Geneva, AppleGothic, sans-serif",
+             fontStyle: 'bold',
+             fontSize: 14,
+
+          },
+        },
+        plugins: {
+          deferred: {           // enabled by default
+              xOffset: 150,     // defer until 150px of the canvas width are inside the viewport
+              yOffset: '50%',   // defer until 50% of the canvas height are inside the viewport
+              delay: 500        // delay of 500 ms after the canvas is considered inside the viewport
+          }
+        }
+
+
+    }
+});
+
+</script>
+
+</body>
+</html>

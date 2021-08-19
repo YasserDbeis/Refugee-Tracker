@@ -1,0 +1,7 @@
+from django.test import TestCase
+
+# Create your tests here.
+NEWSAPI_KEY = 'e7574739bccf4313bf4f01f06774802f'
+FLICKRAPI_KEY = '1e68e420d9c8bd0e33301429630cf3b5'
+FLICKRAPI_SECRET = '67a16ddaf7414f8f'
+MAPBOX_KEY = 'pk.eyJ1IjoieW96bm9iIiwiYSI6ImNrOW9zd3plbTA0M2wzZnFzOWtjY245bnMifQ.CBO500KFH39b4Rc2U6L95Q'
