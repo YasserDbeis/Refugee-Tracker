@@ -18,21 +18,9 @@ from flickr_api import Walker, Photo
 import os, sys
 from gnews import GNews
 
-
 # sys.path.insert(1, '/path/to/application/app/folder')
 
 sys.path.append(os.path.realpath('.'))
-os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
-
-from .keys import NEWSAPI_KEY
-from .keys import FLICKRAPI_KEY
-from .keys import FLICKRAPI_SECRET
-from .keys import MAPBOX_KEY
-
-MAPBOX_KEY = json.dumps(MAPBOX_KEY)
-
-newsapi = NewsApiClient(api_key=NEWSAPI_KEY)
-flickr_api.set_keys(api_key = FLICKRAPI_KEY, api_secret = FLICKRAPI_SECRET)
 
 # Create your views here.
 
