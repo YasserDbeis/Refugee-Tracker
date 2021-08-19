@@ -18,8 +18,6 @@ from flickr_api import Walker, Photo
 import os, sys
 from gnews import GNews
 
-# sys.path.insert(1, '/path/to/application/app/folder')
-
 sys.path.append(os.path.realpath('.'))
 
 # Create your views here.
