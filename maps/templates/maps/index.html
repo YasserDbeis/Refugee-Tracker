@@ -183,11 +183,10 @@ var images =  JSON.parse('{{ images | escapejs }}');
 // console.log(images);
 // console.log(images[0].link);
 for(i = 0; i < images.length; i++) {
-  console.log(images[i].link);
   var elemAdd = document.createElement("DIV");
   var elemImg = document.createElement("IMG");
   elemImg.type = "image";
-  elemImg.src = images[i].link;
+  elemImg.src = images[i];
   elemImg.className = "carousel-image";
   elemImg.width = "700";
   elemImg.height = "500";
