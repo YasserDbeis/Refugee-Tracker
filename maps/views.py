@@ -121,4 +121,4 @@ def index(request):
     images = json.dumps(images)
 
     print("IMAGES DONE")
-    return render(request, "maps/index.html", {'geo_json_string' : geo_json_string, 'links' : links, 'regions' : regionsPop, 'subregions' : subregionsPop, 'countries' : countriesPop, 'images' : images, 'MAPBOX_KEY' : MAPBOX_KEY})
+    return render(request, "maps/index.html", {'geo_json_string' : geo_json_string, 'links' : links, 'regions' : regionsPop, 'subregions' : subregionsPop, 'countries' : countriesPop, 'images' : images})
