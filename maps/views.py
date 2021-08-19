@@ -15,12 +15,9 @@ from datetime import datetime, timedelta
 from newsapi import NewsApiClient
 import flickr_api
 from flickr_api import Walker, Photo
-import datetime
 import os, sys
-from pygooglenews import GoogleNews
 from gnews import GNews
-import asyncio
-import aiohttp
+
 
 # sys.path.insert(1, '/path/to/application/app/folder')
 
