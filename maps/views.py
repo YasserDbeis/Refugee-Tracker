@@ -117,7 +117,7 @@ def index(request):
     # user = flickr_api.Person.findByUserName('MedGlobal')
     # photos = user.getPhotos()
 
-    images = ['https://live.staticflickr.com/65535/49757472791_95d370c625_b.jpg', 'https://live.staticflickr.com/65535/49757808382_4b4e4a86d4_b.jpg', "https://live.staticflickr.com/65535/49757474531_155b81172d_6k.jpg"]     
+    images = ["https://live.staticflickr.com/65535/49757472791_95d370c625_b.jpg", "https://live.staticflickr.com/65535/49757808382_4b4e4a86d4_b.jpg", "https://live.staticflickr.com/65535/49757474531_155b81172d_6k.jpg"]   
     images = json.dumps(images)
 
     print("IMAGES DONE")
